@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+    <%- include('partials/head.ejs') %> 
+
+<body>
+    <%- include('partials/header') %> 
+    <section class="section-intro">
+        <div class="intro-banner-wrap">
+            <img src="images/None_DZFWBOTTD3.webp" class="w-100 img-fluid banner">
+        </div>
+    </section>
+
+    <section class="section-name  padding-y-sm">
+        <div class="container">
+            <header class="section-heading">
+                <a href="/product/search?search=" class="btn btn-outline-primary float-right">Ver todo</a>
+                <h3 class="section-title">Destacados</h3>
+            </header><!-- sect-heading -->
+            <div class="row">
+                <% products.forEach(product => { %>
+                    <% if(product.archived != "on"){%>
+                    <div class="col-lg-3 col-sm-4">
+                        <div href="#" class="card card-product-grid">
+                            <a href="/product/detail/<%= product.id %>" class="img-wrap"> <img src="/images/productImages/<%= product.images %> "> </a>
+                            <figcaption class="info-wrap">
+                                <a href="/product/detail/<%= product.id %>" class="title"><%= product.name %> </a>
+                                <div class="price mt-1">$<%= product.price/*.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");*/  %> </div> <!-- price-wrap.// -->
+                            </figcaption>
+                        </div>
+                    </div> <!-- col.// -->
+                    <% } %>
+                <% }) %>
+            </div> <!-- row.// -->
+            
+        </div><!-- container // -->
+    </section>
+    <%- include('partials/footer') %> 
+</body>
+</html>

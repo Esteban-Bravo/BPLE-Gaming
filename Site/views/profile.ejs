@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+<script src="/js/alerts.js"></script>
+<body>
+    <%- include('partials/header') %>
+    <section class="section-pagetop bg">
+        <div class="container">
+            <h2 class="title-page">Perfil</h2>
+            <nav>
+                <ol class="breadcrumb text-white">
+                    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Mi cuenta</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+    <div class="container padding-y">
+
+        <div class="row mb-5">
+            <%- include('partials/menuPerfil') %>
+            <main class="col-md-9">
+                <article class="card">
+                    <header class="card-header">
+                        <h4 class="d-inline-block mr-3">Bienvenido</h4>
+                    </header>
+                    <div class="card-body">
+                        <div class="row">
+                            <aside class="col-md-9">
+                                <h5>Datos personales</h5>
+                                <form action="/users/profile/<%=user.id%>?_method=PUT" method="POST">
+                                    <div class="form-group form-row">
+                                        <label class="col-md-3 col-form-label">Nombre</label>
+                                        <div class="col">
+                                            <input type="text" class="form-control" placeholder="Nombre"
+                                                name="first_name" value="<%=user.first_name%>" disabled>
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control" placeholder="Apellido"
+                                                name="last_name" value="<%=user.last_name%>" disabled>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <label class="col-md-3 col-form-label">Telefono</label>
+                                        <div class="col">
+                                            <div class="input-group">
+                                                <input name="phone" class="form-control" placeholder="Telefono"
+                                                    type="text" name="phone" value="<%=user.phone%>">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <label class="col-md-3 col-form-label">Email</label>
+                                        <div class="col-sm-9">
+                                            <input type="email" class="form-control" placeholder="nombre@gmail.com"
+                                                name="email" value="<%=user.email%>" disabled>
+                                        </div>
+                                    </div>
+                                    <% if(user.category == "admin"){%>
+                                    <div class="form-group form-row">
+                                        <label class="col-md-3 col-form-label">Categoria</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" placeholder="nombre@gmail.com"
+                                                name="category" value="<%=user.category%>" disabled>
+                                        </div>
+                                    </div>
+
+                                    <% } %>
+
+
+                            </aside>
+                            <aside class="col-md-9">
+                                <h5>Datos de envio</h5>
+                                <form action="/users/register" method="POST">
+                                    <div class="form-group form-row">
+                                        <label class="col-md-3 col-form-label">Provincia</label>
+                                        <div class="col">
+                                            <input type="text" class="form-control" placeholder="Provincia" name="state"
+                                                value="<%=user.state%>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <label class="col-md-3 col-form-label">Localidad</label>
+                                        <div class="col">
+                                            <input type="text" class="form-control" placeholder="Localidad" name="city"
+                                                value="<%=user.city%>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <label class="col-md-3 col-form-label">Codigo Postal</label>
+                                        <div class="col">
+                                            <input type="text" class="form-control" placeholder="Codigo Postal"
+                                                name="cp" value="<%=user.cp%>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <label class="col-md-3 col-form-label">Calle</label>
+                                        <div class="col">
+                                            <input type="text" class="form-control" placeholder="Calle" name="street"
+                                                value="<%=user.street%>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <label class="col-md-3 col-form-label">Numero</label>
+                                        <div class="col">
+                                            <input type="text" class="form-control" placeholder="Numero"
+                                                name="house_number" value="<%=user.house_number%>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <label class="col-md-3 col-form-label">Dpto</label>
+                                        <div class="col">
+                                            <input type="text" class="form-control" placeholder="Dpto" name="apartment"
+                                                value="<%=user.apartment%>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-row">
+                                        <label class="col-md-3 col-form-label">Piso</label>
+                                        <div class="col">
+                                            <input type="text" class="form-control" placeholder="Piso" name="floor"
+                                                value="<%=user.floor%>">
+                                        </div>
+                                    </div>
+
+                                 <!--<div class="form-group form-row">
+                                        <label class="col-md-3 col-form-label">Foto</label>
+                                        <div class="col">
+                                            <div class="input-group">
+                                                <input type="file" class="form-control" name="image" accept="image/*">
+                                            </div>
+                                            <span class="text-danger" id="photoError"></span>
+                                        </div>
+                                    </div> -->   
+
+                                    <div class="form mb-2">
+                                        <div class="offset-sm-3">
+                                            <a href="/product/productlist">
+                                                <button class="btn btn-outline-primary" type="button" onclick="return ConfirmCancelEdit()">
+                                                    <span class="text">Cancelar</span>
+                                                </button>
+                                            </a>
+                                            <button class="btn btn-primary" type="submit" onclick="return ConfirmEdit()">
+                                                <span class="text">Aplicar</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                            </aside>
+                        </div>
+                    </div>
+        </div>
+        <%- include('partials/footer') %>
+</body>
+
+</html>

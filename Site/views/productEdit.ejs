@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="/js/productEdit.js"></script>
+<script src="/js/alerts.js"></script>
+
+<body>
+    <%- include('partials/header') %>
+    <section class="section-pagetop bg">
+        <div class="container">
+            <h2 class="title-page">Producto</h2>
+            <nav>
+                <ol class="breadcrumb text-white">
+                    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="/product/productlist ">Productos</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Editar Producto</li>
+                </ol>
+            </nav>
+        </div>
+    </section>
+    <div class="container padding-y">
+        <div class="card">
+            <div class="row no-gutters">
+                <aside class="col-md-6">
+                    <article class="gallery-wrap">
+                        <div class="img-big-wrap">
+                            <div> <a href="#"><img src="/images/productImages/<%= product.images %>"></a></div>
+                        </div>
+                        <div class="thumbs-wrap">
+                            <a href="" class="item-thumb"> <img src="/images/productImages/<%= product.images %>"></a>
+                            <a href="" class="item-thumb"> <img src="/images/productImages/<%= product.images %>"></a>
+                            <a href="" class="item-thumb"> <img src="/images/productImages/<%= product.images%>"></a>
+                        </div>
+                    </article>
+                </aside>
+                <main class="col-md-6 border-left">
+                    <article class="content-body">
+                        <form id="edit"  action="/product/edit/<%=product.id %>?_method=PUT" method="POST"
+                            enctype="multipart/form-data">
+
+                            <div class="form-group">
+                                <input type="text" placeholder="Nombre" class="form-control" name="name"
+                                    value="<%= product.name  %> ">
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-group">
+                                    <input type="number" placeholder="Precio" class="form-control" name="price"
+                                        value=<%= product.price%>>
+                                </div>
+                            </div>
+
+                            <select id="inputState" class="form-control mb-3" name="category">
+                                <% categories.forEach(category => { %>
+                                <% if (category.id == product.id_category) { %>
+                                <option value=" <%= category.id %>" selected>
+                                    <%= category.name %>
+                                </option>
+                                <% }else{%>
+                                <option value=" <%= category.id %>">
+                                    <%= category.name %>
+                                </option>
+                                <%} %>
+                                <% }) %>
+                            </select>
+
+
+                            <div class="form-group">
+                                <textarea class="form-control" id="exampleFormControlTextarea1"
+                                    placeholder="Descripcion" rows="3"
+                                    name="description"><%= product.description  %></textarea>
+                                <small class="form-text text-muted"> El carácter máximo es de 250 letras </small>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <div class="form-group">
+                                    <input type="file" class="form-control" name="image" value="<%= product.image %>">
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row mt-2">
+                                <div class="form-group col-md flex-grow-0">
+                                    <label>Cantidad</label>
+                                    <div class="input-group mb-3 input-spinner">
+                                        <div class="input-group-prepend">
+                                            <button onclick="decrement()" class="btn btn-light" type="button"
+                                                id="button-minus"> − </button>
+                                        </div>
+                                        <input value="<%= product.warranty%>" id=demoInput type="number"
+                                            class="form-control" name="warranty">
+                                        <div class="input-group-append">
+                                            <button onclick="increment()" class="btn btn-light" type="button"
+                                                id="button-plus"> + </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md">
+                                    <label>Destacado</label>
+                                    <div class="mt-2">
+                                        <label class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" name="status" value="on" class="custom-control-input"
+                                                <% if(product.status == "on"){%> checked <%  } %>>
+                                            <div class="custom-control-label">Si</div>
+                                        </label>
+
+                                        <label class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" name="status" value="off" class="custom-control-input"
+                                                <% if(product.status != "on"){%> checked <%  } %>>
+                                            <div class="custom-control-label">No</div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md">
+                                    <label>Archivado</label>
+                                    <div class="mt-2">
+                                        <label class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" name="archived" value="on" class="custom-control-input"
+                                                <% if(product.archived == "on"){%> checked <%  } %>>
+                                            <div class="custom-control-label">Si</div>
+                                        </label>
+
+                                        <label class="custom-control custom-radio custom-control-inline">
+                                            <input type="radio" name="archived" value="off" class="custom-control-input"
+                                                <% if(product.archived != "on"){%> checked <%  } %>>
+                                            <div class="custom-control-label">No</div>
+                                        </label>
+                                    </div>
+                                </div> 
+                            </div>
+
+
+
+                            <div class="form">
+                                <hr>
+                                <a href="/product/productlist/<%= product.id  %> ">
+                                    <button id="cancel-edit" class="btn btn-outline-primary confirm-cancel" type="submit" onclick="ConfirmCancelEdit()"
+>
+                                        <span class="text">Cancelar</span>
+                                    </button>
+                                </a>
+                                <button id="confirm-edit" class="btn btn-primary " type="submit" onclick="ConfirmEdit()" >
+                                    <span class="text">Aplicar</span>
+                                </button>
+                        </form>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </div>
+    <%- include('partials/footer') %>
+</body>
+
+</html>

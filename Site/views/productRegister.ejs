@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/head') %>
+<script src="/js/product.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<body>
+    <%- include('partials/header') %>
+
+    <section class="section-pagetop bg">
+        <div class="container">
+            <h2 class="title-page">Producto</h2>
+
+            <nav>
+                <ol class="breadcrumb text-white">
+                    <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="/product/productlist ">Productos</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Agregar Producto</li>
+                </ol>
+            </nav>
+
+
+        </div> <!-- container //  -->
+    </section>
+
+    <div class="container padding-y">
+        <div class="card">
+            <div class="row no-gutters">
+                <aside class="col-md-6">
+                    <article class="gallery-wrap">
+                        <div class="img-big-wrap">
+                            <div> <a href="#"><img id="vistaPrevia" src=""></a></div>
+                        </div> <!-- slider-product.// -->
+                        <div class="thumbs-wrap">
+                            <a href="" class="item-thumb"> <img src=""></a>
+                            <a href="" class="item-thumb"> <img src=""></a>
+                            <a href="" class="item-thumb"> <img src=""></a>
+                        </div> <!-- slider-nav.// -->
+                    </article> <!-- gallery-wrap .end// -->
+                </aside>
+                <main class="col-md-6 border-left">
+                    <article class="content-body">
+                        <ul id="errors" class="list-error mb-4">
+                            <% if (typeof errors != 'undefined') {%>
+                            <% errors.forEach(error =>{ %>
+                            <li><%= error.msg %></li>
+                            <% }) %>
+                            <% } %>
+                        </ul>
+                        <form id="register" action="/product/add" method="POST" enctype="multipart/form-data">
+
+                            <div class="form-group form-row">
+                                <div class="col">
+                                    <div class="input-group">
+                                        <input type="text" placeholder="Nombre" class="form-control" name="name" autocomplete="off">
+                                    </div>
+                                    <span class="text-danger" id="nameError"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group form-row">
+                                <div class="col">
+                                    <div class="input-group">
+                                        <input type="number" placeholder="Precio" class="form-control" name="price">
+                                    </div>
+                                    <span class="text-danger" id="priceError"></span>
+                                </div>
+                            </div>
+
+                            <select id="inputState" class="form-control mb-3" name="category">
+                                <% categories.forEach(category => { %>
+                                <option value="<%= category.id %>">
+                                    <%= category.name %>
+                                </option>
+                                <% }) %>
+                            </select>
+
+
+                            <div class="form-group form-row">
+                                <div class="col">
+                                    <textarea class="form-control" id="exampleFormControlTextarea1"
+                                        placeholder="Descripcion" rows="3" name="description"></textarea>
+                                    <small class="form-text text-muted"> El carácter máximo es de 250 letras
+                                    </small>
+                                    <span class="text-danger" id="descriptionError"></span>
+                                </div>
+                            </div>
+                            <div class="form-group form-row">
+                                <div class="col">
+                                    <div class="input-group">
+                                        <input type="file" class="form-control" name="images" accept="image/*">
+                                    </div>
+                                    <span class="text-danger" id="photoError"></span>
+                                </div>
+                            </div>
+
+                            <label>Garantia</label>
+                            <div class="form-group flex-grow-0">
+                                <div class="input-group mb-3 input-spinner">
+                                    <div class="input-group-prepend">
+                                        <button onclick="decrement()" class="btn btn-light" type="button"
+                                            id="button-minus"> − </button>
+                                    </div>
+                                    <input id=demoInput type=number min=0 class="form-control" value="0"
+                                        name="warranty">
+                                    <div class="input-group-append">
+                                        <button onclick="increment()" class="btn btn-light" type="button"
+                                            id="button-plus"> + </button>
+                                    </div>
+                                </div>
+                                <span class="text-danger" id="warrantyError"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" name="status">
+                                    <div class="custom-control-label" for="customCheck1">Destacado</div>
+                                </label>
+                            </div>
+                            <hr>
+                            <a href="/product/productlist">
+                                <button class="btn btn-outline-primary" type="button" onclick="return ConfirmDelate()">
+                                    <span class="text">Cancelar</span>
+                                </button>
+                            </a>
+                            <button class="btn btn-primary" type="submit">
+                                <span class="text">Añadir</span>
+                            </button>
+
+                        </form>
+
+                    </article> <!-- product-info-aside .// -->
+                </main> <!-- col.// -->
+            </div> <!-- row.// -->
+        </div>
+
+        <!-- 
+        <section class="padding-y">
+            <hr class="divider">
+        </section>
+
+        <output>
+             
+            <article class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <aside class="col-md-7">
+                            <h5>Caracteristicas</h5>
+                            <dl class="row">
+                                <dt class="col-sm-5">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Caracteristica" class="form-control" name="">
+                                    </div>
+                                </dt>
+                                <dd class="col-sm-5">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Especifacion" class="form-control" name="">
+                                        
+                                    </div>
+                                </dd>
+                                <div class="col-sm-1">
+                                    <a href="#" class="btn  btn-outline-primary"><i class="fas fa-plus"></i>  </a>
+                                </div>
+                                <dt class="col-sm-5">Caracteristica</dt>
+                                <dd class="col-sm-5">Especifacion</dd>
+
+                            </dl>
+                        </aside>
+                        <aside class="col-md-5">
+                            <h5>Tener en cuenta</h5>
+                            <ul class="list-check">
+                                <li>Hacemos factura A y B.</li>
+                                <li>Todos los precios son finales IVA incluido.</li>
+                                <li>No aceptamos ningún producto en parte de pago.</li>
+                                <li>Todos nuestro artículos son nuevos y se entregan en su empaque original.</li>
+                            </ul>
+                        </aside>
+                    </div> 
+                    <hr>
+                    <p>
+                        Para mas informacion visitar la pagina del fabricante <a
+                            href="#l">link del producto</a>
+                    </p>
+                </div> 
+            </article> 
+            
+        </output>
+    -->
+    </div>
+    <%- include('partials/footer') %>
+</body>
+
+</html>
